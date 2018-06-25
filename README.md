@@ -8,6 +8,8 @@ GCPM is a tool for making Chrome portable. So, that Chrome can be moved anywhere
 GCPM requires dpkg-deb (dpkg-deb comes preinstalled in almost every linux OS). 
 
 `Step (1)`: Download GCPM.
+
+
 `Step (2)`: Download latest Chrome *.deb package from https://www.google.com/chrome/  
 `Step (3)`: Give execution permission to GCPM. By Right clicking and going onto its properties and then clicking on "Allow executing file as program". Or you can do this by executing below command in the directory where GCPM exist.  
 

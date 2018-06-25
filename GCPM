@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+rf=`tput setaf 1`
+rb=`tput setab 1`
+gf=`tput setaf 2`
+gb=`tput setab 2`
+wf=`tput setaf 7`
+wb=`tput setab 7`
+yf=`tput setaf 3`
+yb=`tput setab 3`
+bf=`tput setaf 4`
+bb=`tput setab 4`
+blf=`tput setaf 0`
+blb=`tput setab 0`
+r=`tput sgr 0`
+
+if [ "$1" == '' ]; then
+  echo "${rb}${wf}Error: Chrome package not specified${r}"
+  echo -e "type \"./GCPM --help\" for more options and usage\n  Google Chrome Portable Maker\n"
+fi
+if [[ $1 == *.deb ]] || [[ $1 == *.DEB ]]; then
+  #Google chrome package passed
+  if [ ! -e "$1" ]; then
+    #statement
+    echo "${rb}${wf}Error: Specified file "$1" does not exists${r}"
+    echo -e "type \"./GCPM --help\" for more options and usage\n  Google Chrome Portable Maker\n"
+    exit 2
+  fi
+
+
+  #Making folder for Portable google chrome
+  name="ChromePortableGCPM"
+  n=0
+    while [[ -d "$name" ]]; do
+      n=$((n+1))
+      t="ChromePortableGCPM($n)"
+      name="$t"
+    done
+  if [ ! -d "$name" ]; then
+    mkdir $name
+  fi
+
+  #Extracting data form the package
+  echo -e "\n${gf}${blb}Extracting data from package${r}\n"
+  dpkg-deb -v --extract $1 "$name/temp"
+  echo -e "\n${gf}${blb}Extraction Completed${r}\n"
+
+  #moving chrome folder to data folder and renaming
+  mv -v "$name/temp/opt/google/chrome" "$name"
+  mv -v "$name/chrome" "$name/data"
+  mv -v "$name/data/google-chrome" "$name/data/launcher"
+
+  #deleting the temporary files
+  echo -e "\n${gf}${blb}Deleting temporary files${r}\n"
+  rm -rf -v "$name/temp"
+  echo -e "\n${gf}${blb}Deleted temporary files${r}\n"
+
+  #making the virtual home directory
+  mkdir "$name/data/VHOME"
+
+  #making desktop entry
+  touch "$name/chromeGCPM.desktop"
+  dpath="$name/chromeGCPM.desktop"
+  #echo -n 'Exec=sh -c 'env HOME="$(dirname "$*")"/Data/VHOME "$(dirname "$*")"/Data/google-chrome' dummy %k' in
+  #to the desktop Entry file
+  {
+    echo '[Desktop Entry]'
+    echo 'Name=Chrome Portable'
+    echo 'Type=Application'
+    echo -n 'Exec=sh -c '
+    echo -n ''"'"''
+    echo -n 'env HOME='
+    echo -n '"$'
+    echo -n '(dirname '
+    echo -n '"$'
+    echo -n '*")'
+    echo -n '"'
+    echo -n '/data/VHOME '
+    echo -n '"$'
+    echo -n '(dirname '
+    echo -n '"$'
+    echo -n '*")'
+    echo -n '"'
+    echo -n '/data/launcher'
+    echo -n ''"'"''
+    echo ' dummy %k'
+    echo 'Icon=google-chrome'
+  } >"$dpath"
+    echo -e "\n${gf}${blb}Generated Virtual Home directory and chrome launcher${r}"
+  #Execution Permisiion to desktop entry file
+  chmod +x "$dpath"
+  echo -e "\n${gf}${blb}Written to GCPM.desktop!${r}"
+  #changing owner of chrome-sandbox
+  echo -e "\n${gf}${blb}Please enter password, and make sure you are added in the sudoers file\n${r}"
+  sudo chown root:root "$name/data/chrome-sandbox"
+  sudo chmod 4755 "$name/data/chrome-sandbox"
+  echo -e "\n${wf}${bb}Process Completed Successfully!\nNow you can launch google chrome from $name folder \nYou can move $name folder anywhere, it will still work${r}"
+  echo -e "\n${rf}${wb}Note: Google Chrome will take 2-3 mins to start for the first time \n(Only for the first time,It will start immediately after this)${r}\n"
+fi
+if [ "$1" != '' ]; then
+  if [[ "$1" == '--help' ]]; then
+    echo -e "\nGoogle Chrome Portable maker\n"
+    echo -e "It makes Chrome portable so that you can move it anywhere or browse this privately"
+    echo -e "usage: ./GCPM [google-chrome *.deb package]"
+    echo -e "Download Google Chrome package from https://www.google.com/chrome/"
+    echo -e "Browse GCPM Github repository at \n"
+    exit 12
+  fi
+  if [[ $1 != *deb ]] && [[ $1 != *DEB ]]; then
+    echo "${rb}${wf}Error: Not a valid debian package passed${r}"
+    echo -e "type \"./GCPM --help\" for more options and usage\n  Google Chrome Portable Maker\n"
+    exit 1
+  fi
+fi

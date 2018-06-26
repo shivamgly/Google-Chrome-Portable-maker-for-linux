@@ -102,7 +102,7 @@ if [ "$1" != '' ]; then
     echo -e "It makes Chrome portable so that you can move it anywhere or browse this privately"
     echo -e "usage: ./GCPM [google-chrome *.deb package]"
     echo -e "Download Google Chrome package from https://www.google.com/chrome/"
-    echo -e "Browse GCPM Github repository at \n"
+    echo -e "Browse GCPM Github repository at https://github.com/shivamgoyal15/Google-Chrome-Portable-maker-for-linux\n"
     exit 12
   fi
   if [[ $1 != *deb ]] && [[ $1 != *DEB ]]; then

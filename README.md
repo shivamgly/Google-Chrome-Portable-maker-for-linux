@@ -14,7 +14,7 @@ GCPM requires dpkg-deb (dpkg-deb comes preinstalled in almost every linux OS).
 `Step (3)`: Give execution permission to GCPM. By Right clicking and going onto its properties and then clicking on "Allow executing file as program". Or you can do this by executing below command in the directory where GCPM exist.  
 
 ```sh
-$ exec +x GCPM
+$ chmod +x GCPM
 ```
 `Step (4)`: Now move both GCPM file and the Chrome package ( let it be `google-chrome-stable_current_amd64.deb` ) to same folder.
 

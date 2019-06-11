@@ -7,7 +7,7 @@ GCPM is a tool for making Chrome portable. So, that Chrome can be moved anywhere
 
 GCPM requires dpkg-deb (dpkg-deb comes preinstalled in almost every linux OS). 
 
-`Step (1)`: Download GCPM.
+`Step (1)`: Download GCPM. from here https://raw.githubusercontent.com/shivamgoyal15/Google-Chrome-Portable-maker-for-linux/master/GCPM
 
 `Step (2)`: Download latest Chrome *.deb package from https://www.google.com/chrome/ 
 
@@ -22,6 +22,6 @@ $ chmod +x GCPM
 ```sh
 $ ./GCPM google-chrome-stable_current_amd64.deb
 ```
-`Step (6)`: GCPM will ask you for password enter password for `sudo`.
+`Step (6)`: GCPM will ask you for password enter password for `sudo`. (The authentication is only required because chrome sandbox must be owned by root)
 
 `After completion you can launch chrome form ChromePortableGCPM folder.`

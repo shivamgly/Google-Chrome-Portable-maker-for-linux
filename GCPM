@@ -70,7 +70,7 @@ if [[ $1 == *.deb ]] || [[ $1 == *.DEB ]]; then
     echo -n ''"'"''
     echo -n 'rm -rf "$(dirname "$*")"/execute_this.sh; '
     echo -n 'if [ `stat -c %%a:%%u:%%g "$(dirname "$*")"/data/chrome-sandbox` != 4755:0:0 ]; then '
-    echo -n  'echo -e '"'"'"'"'"'"'"'"
+    echo -n  'echo '"'"'"'"'"'"'"'"
     echo -n   'BASEDIR="$(dirname "$0")"\n'
     echo -n   'sudo chown root:root $BASEDIR/data/chrome-sandbox\n'
     echo -n   'sudo chmod 4755 $BASEDIR/data/chrome-sandbox\n'
